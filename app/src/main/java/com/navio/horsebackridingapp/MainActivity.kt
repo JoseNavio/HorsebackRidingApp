@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 import com.navio.horsebackridingapp.databinding.ActivityMainBinding
 import com.navio.horsebackridingapp.fragments.FragmentLogin
+import com.navio.horsebackridingapp.fragments.bookings.FragmentBookings
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +28,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun setButtons() {
 
+        binding.mainActivityButtonLogin.setOnClickListener {
+            attachLoginFragment()
+        }
+
+        binding.mainActivityButtonBookings.setOnClickListener {
+            attachBookingsFragment()
+        }
     }
 
     private fun attachLoginFragment() {
@@ -37,7 +45,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun attachListFragment() {
+    private fun attachBookingsFragment() {
 
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(binding.mainActivityContainer.id, FragmentBookings.newInstance())
+        }
     }
 }
