@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.navio.horsebackridingapp.R
 import com.navio.horsebackridingapp.api.RetrofitClient
 import com.navio.horsebackridingapp.data.LoginRequest
+import com.navio.horsebackridingapp.data.LoginResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,12 +41,10 @@ class FragmentLogin : Fragment() {
             val request = LoginRequest(username, password)
 
             RetrofitClient.instance.userLogin(request).enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    // Handle the response
-                    Log.d("Navio_Jose", response.body().toString())
 
-                    //Logs the token received from the server
-                    Log.d("Navio_Jose", response.headers().toString())
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    val jsonResponse = response.body()?.string()
+                    Log.d("Navio_HorsebackRidingApp", "JSON Response: $jsonResponse")
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

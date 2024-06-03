@@ -1,6 +1,6 @@
 package com.navio.horsebackridingapp.data
 
 data class LoginRequest(
-    val loginusername: String,
-    val loginpassword: String
+    val username: String,
+    val password: String
 )
