@@ -10,6 +10,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.navio.horsebackridingapp.R
 import com.navio.horsebackridingapp.api.RetrofitClient
+import com.navio.horsebackridingapp.data.LoginRequest
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,17 +37,20 @@ class FragmentLogin : Fragment() {
             val username = usernameEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
-            RetrofitClient.instance.userLogin(username, password).enqueue(object : Callback<ResponseBody> {
+            val request = LoginRequest(username, password)
+
+            RetrofitClient.instance.userLogin(request).enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     // Handle the response
-                    Log.d("Navio_HorsebackRidingApp", response.body().toString())
-                    // Logs all the response
-                    Log.d("Navio_HorsebackRidingApp", response.toString())
+                    Log.d("Navio_Jose", response.body().toString())
+
+                    //Logs the token received from the server
+                    Log.d("Navio_Jose", response.headers().toString())
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     // Handle the failure
-                    Log.e("Navio_HorsebackRidingApp", t.message.toString())
+                    Log.d("Navio_Mal", t.message.toString())
                 }
             })
         }
