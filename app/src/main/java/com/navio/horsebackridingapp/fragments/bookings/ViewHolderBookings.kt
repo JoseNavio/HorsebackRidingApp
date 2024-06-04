@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.navio.horsebackridingapp.data.Booking
 import com.navio.horsebackridingapp.databinding.ItemBookingBinding
 
-class ViewHolderBookings(itemView: View, adapterBookings: AdapterBookings) : RecyclerView.ViewHolder(itemView) {
+class ViewHolderBookings(itemView: View, private val adapterBookings: AdapterBookings) : RecyclerView.ViewHolder(itemView) {
 
     private val bindingBooking = ItemBookingBinding.bind(itemView)
 
@@ -21,6 +21,10 @@ class ViewHolderBookings(itemView: View, adapterBookings: AdapterBookings) : Rec
         bindingBooking.itemBookingDate.text = booking.date
         bindingBooking.itemBookingHour.text = booking.hour
         bindingBooking.itemBookingComment.text = booking.comment
+
+        bindingBooking.itemBookingButtonDelete.setOnClickListener {
+            adapterBookings.deleteBooking(booking.id)
+        }
     }
     fun renderSelected(booking: Booking){
 

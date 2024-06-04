@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setButtons()
-        enableAdd()
         attachLoginFragment()
     }
 

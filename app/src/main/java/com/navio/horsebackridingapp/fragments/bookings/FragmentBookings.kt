@@ -56,7 +56,25 @@ class FragmentBookings : Fragment() {
     private fun initAdapter() {
         lifecycleScope.launch(Dispatchers.Main) {
             recycler = binding.fragmentBookingsRecycler
-            adapterBookings = AdapterBookings()
+            adapterBookings = AdapterBookings(
+                object : FragmentBookings.OnItemChanges {
+
+                    override fun onItemDeleted(id: Int) {
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            val apiService = RetrofitClient.getInstance(requireContext())
+                            val response = apiService.deleteBookingAPI(id)
+
+                            if (response.isSuccessful) {
+                                Log.d("Navio_log", "Booking deleted")
+                                fetchBookings()
+                            } else {
+                                Log.d("Navio_log", "Error deleting booking")
+                            }
+                        }
+                    }
+                }
+
+            )
             recycler.adapter = adapterBookings
             recycler.layoutManager = LinearLayoutManager(context)
 
@@ -106,6 +124,9 @@ class FragmentBookings : Fragment() {
         return horses
     }
 
+    interface OnItemChanges {
+        fun onItemDeleted(id: Int)
+    }
     companion object {
         @JvmStatic
         fun newInstance() = FragmentBookings()
