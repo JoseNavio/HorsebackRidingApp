@@ -1,3 +1,14 @@
 package com.navio.horsebackridingapp.data
 
-data class Booking(val horseName: String, val date: String, val hour: String, val comment: String)
+import com.google.gson.annotations.SerializedName
+
+data class Booking(
+    @SerializedName("user_id")
+    val userId: Int,
+    @SerializedName("horse_id")
+    val horseId: Int,
+    var horseName: String,
+    val date: String,
+    val hour: String,
+    val comment: String
+)

@@ -1,34 +1,42 @@
 package com.navio.horsebackridingapp.fragments.bookings
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.navio.horsebackridingapp.R
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.navio.horsebackridingapp.api.RetrofitClient
 import com.navio.horsebackridingapp.data.Booking
+import com.navio.horsebackridingapp.data.Horse
 import com.navio.horsebackridingapp.databinding.FragmentBookingsBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class FragmentBookings : Fragment() {
-
 
     private lateinit var binding: FragmentBookingsBinding
     private lateinit var recycler: RecyclerView
     private lateinit var adapterBookings: AdapterBookings
-    private lateinit var bookings: MutableList<Booking>
-
+    var bookingsLiveData = MutableLiveData<MutableList<Booking>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = FragmentBookingsBinding.inflate(layoutInflater)
 
+        retrieveData()
         initAdapter()
     }
 
@@ -39,21 +47,63 @@ class FragmentBookings : Fragment() {
         return binding.root
     }
 
-    private fun initAdapter() {
-
-        //todo Test mock
-        bookings = mutableListOf(
-            Booking("Macarena", "12-07-2023", "12:00", "Estoy..."),
-            Booking("Pitufo", "12-08-2023", "11:00", "Mi mujer me ha dejado."),
-            Booking("Pablo Motos", "12-09-2023", "10:00", "Estoy en la tele.")
-        )
-
+    private fun retrieveData() {
         lifecycleScope.launch(Dispatchers.IO) {
+            fetchBookings()
+        }
+    }
+
+    private fun initAdapter() {
+        lifecycleScope.launch(Dispatchers.Main) {
             recycler = binding.fragmentBookingsRecycler
-            adapterBookings = AdapterBookings(bookings)
+            adapterBookings = AdapterBookings()
             recycler.adapter = adapterBookings
             recycler.layoutManager = LinearLayoutManager(context)
+
+            // Observe the LiveData object and update the adapter when the bookings change
+            bookingsLiveData.observe(viewLifecycleOwner) { bookings ->
+                adapterBookings.updateBookings(bookings)
+            }
         }
+    }
+
+  private suspend fun fetchBookings() {
+    val horses: List<Horse> = fetchHorses()
+
+    Log.d("Navio_horses", horses.toString())
+
+    val apiService = RetrofitClient.getInstance(requireContext())
+    val response = apiService.getAllBookings()
+
+    val jsonResponse = response.body()?.string()
+
+    //Parse to a list of bookings
+    val gson = Gson()
+    val bookingListType = object : TypeToken<List<Booking>>() {}.type
+    val bookings: List<Booking> = gson.fromJson(jsonResponse, bookingListType)
+
+    bookings.forEach { booking ->
+        val horse = horses.find { it.id == booking.horseId }
+        booking.horseName = horse?.name ?: "Unknown"
+
+        Log.d("Navio_horse_name", booking.horseName)
+    }
+
+    bookingsLiveData.postValue(bookings.toMutableList())
+}
+
+    private suspend fun fetchHorses(): List<Horse> {
+        val apiService = RetrofitClient.getInstance(requireContext())
+        val response = apiService.getAllHorses()
+
+        val jsonResponse = response.body()?.string()
+
+        //Parse to a list of horses
+        val gson = Gson()
+        val horseListType = object : TypeToken<List<Horse>>() {}.type
+        val horses:List<Horse> = gson.fromJson(jsonResponse, horseListType)
+
+        return horses
     }
 
     companion object {

@@ -1,17 +1,12 @@
 package com.navio.horsebackridingapp
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.View
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 import com.navio.horsebackridingapp.databinding.ActivityMainBinding
 import com.navio.horsebackridingapp.fragments.FragmentLogin
+import com.navio.horsebackridingapp.fragments.bookings.FragmentBook
 import com.navio.horsebackridingapp.fragments.bookings.FragmentBookings
 
 class MainActivity : AppCompatActivity() {
@@ -24,14 +19,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setButtons()
-        disableButtons()
+        enableAdd()
         attachLoginFragment()
     }
 
     private fun setButtons() {
 
-        binding.mainActivityButtonLogin.setOnClickListener {
-            attachLoginFragment()
+        binding.mainActivityButtonAdd.setOnClickListener {
+            attachBookFragment()
         }
 
         binding.mainActivityButtonBookings.setOnClickListener {
@@ -43,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     val loginFragment = FragmentLogin.newInstance()
     loginFragment.setLoginCallback(object : LoginCallback {
         override fun onLoginSuccess() {
-            enableButtons()
             attachBookingsFragment()
         }
     })
@@ -56,23 +50,37 @@ class MainActivity : AppCompatActivity() {
 
     private fun attachBookingsFragment() {
 
+        enableBookings()
+
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(binding.mainActivityContainer.id, FragmentBookings.newInstance())
         }
     }
 
+    private fun attachBookFragment() {
+
+        enableAdd()
+
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(binding.mainActivityContainer.id, FragmentBook.newInstance())
+        }
+    }
+
     //Enable/Disable buttons
-    private fun enableButtons() {
-        binding.mainActivityButtonLogin.visibility = View.VISIBLE
+    private fun enableBookings() {
+        binding.mainActivityButtonAdd.visibility = View.VISIBLE
+        binding.mainActivityButtonBookings.visibility = View.GONE
+    }
+
+    private fun enableAdd() {
+        binding.mainActivityButtonAdd.visibility = View.GONE
         binding.mainActivityButtonBookings.visibility = View.VISIBLE
     }
 
-    private fun disableButtons() {
-        binding.mainActivityButtonLogin.visibility = View.GONE
-        binding.mainActivityButtonBookings.visibility = View.GONE
-    }
     interface LoginCallback {
         fun onLoginSuccess()
     }
+
 }

@@ -1,17 +1,28 @@
 package com.navio.horsebackridingapp.fragments.bookings
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.navio.horsebackridingapp.R
 import com.navio.horsebackridingapp.data.Booking
-class AdapterBookings(private var bookings: MutableList<Booking>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+class AdapterBookings : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var bookings: MutableList<Booking> = mutableListOf()
 
     private var selectedBooking: Int = RecyclerView.NO_POSITION
     private var lastSelectedBooking: Int = RecyclerView.NO_POSITION
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        if (bookings.isEmpty()) {
+            Log.d("Navio_log", "No bookings found")
+        }
+
+        bookings.forEach {
+            Log.d("Navio_log", "Booking: $it")
+        }
 
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_booking, parent, false)
@@ -20,6 +31,7 @@ class AdapterBookings(private var bookings: MutableList<Booking>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
         if (holder is ViewHolderBookings) {
             if (position == selectedBooking) {
                 holder.renderSelected(bookings[position])

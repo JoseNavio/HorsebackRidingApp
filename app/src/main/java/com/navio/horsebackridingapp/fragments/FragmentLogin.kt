@@ -13,8 +13,6 @@ import com.navio.horsebackridingapp.MainActivity
 import com.navio.horsebackridingapp.R
 import com.navio.horsebackridingapp.api.RetrofitClient
 import com.navio.horsebackridingapp.data.LoginRequest
-import com.navio.horsebackridingapp.data.LoginResponse
-import com.navio.horsebackridingapp.fragments.bookings.FragmentBookings
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -64,8 +62,8 @@ class FragmentLogin : Fragment() {
             }
 
             val request = LoginRequest(username, password)
-
-            RetrofitClient.instance.userLogin(request).enqueue(object : Callback<ResponseBody> {
+            val apiService = RetrofitClient.getInstance(requireContext())
+            apiService.userLogin(request).enqueue(object : Callback<ResponseBody> {
 
                 override fun onResponse(
                     call: Call<ResponseBody>,
