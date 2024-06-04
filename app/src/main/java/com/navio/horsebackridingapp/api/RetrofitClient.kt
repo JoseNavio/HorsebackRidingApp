@@ -11,7 +11,7 @@ import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 
 object RetrofitClient {
-    private const val BASE_URL = "http://josenavio.site/api/"
+    private const val BASE_URL = "https://josenavio.site/api/"
 
     private val gson = GsonBuilder()
         .setLenient()

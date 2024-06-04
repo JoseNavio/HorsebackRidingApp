@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +15,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.navio.horsebackridingapp.api.RetrofitClient
 import com.navio.horsebackridingapp.data.Booking
+import com.navio.horsebackridingapp.data.BookingUpdate
 import com.navio.horsebackridingapp.data.Horse
 import com.navio.horsebackridingapp.databinding.FragmentBookingsBinding
 import com.navio.horsebackridingapp.dialogs.DialogEditBooking
@@ -62,22 +64,37 @@ class FragmentBookings : Fragment() {
                     override fun onItemEdited(booking: Booking) {
 
                         lifecycleScope.launch {
-                            //todo Testing...
-                            val dialogEditBooking = DialogEditBooking(requireContext(), fetchHorses())
+                            val dialogEditBooking =
+                                DialogEditBooking(requireContext(), fetchHorses(),
+                                    object : OnItemEdited {
+                                        override fun onItemEdited(booking: BookingUpdate) {
+                                            lifecycleScope.launch(Dispatchers.IO) {
+                                                val apiService =
+                                                    RetrofitClient.getInstance(requireContext())
+                                                val response =
+                                                    apiService.updateBookingAPI(booking.id, booking)
+
+                                                if (response.isSuccessful) {
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        "Booking updated.",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                    fetchBookings()
+                                                } else {
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        "Error updating booking.",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                )
                             dialogEditBooking.create(booking)
                             dialogEditBooking.show()
-
-//                            val apiService = RetrofitClient.getInstance(requireContext())
-//                            val bookingRequest =
-//                                BookingRequest(
-//                                    1,
-//                                    22,
-//                                    "2024-06-01",
-//                                    11,
-//                                    "I am so ready..."
-//                                )
-//                            val response = apiService.createBookingAPI(bookingRequest)
-//                            Log.d("Navio_Response", response.toString())
                         }
                     }
 
@@ -150,6 +167,10 @@ class FragmentBookings : Fragment() {
     interface OnItemChanges {
         fun onItemDeleted(id: Int)
         fun onItemEdited(booking: Booking)
+    }
+
+    interface OnItemEdited {
+        fun onItemEdited(booking: BookingUpdate)
     }
 
     companion object {

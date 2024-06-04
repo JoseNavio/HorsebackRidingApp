@@ -8,10 +8,16 @@ import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.navio.horsebackridingapp.data.Booking
+import com.navio.horsebackridingapp.data.BookingUpdate
 import com.navio.horsebackridingapp.data.Horse
 import com.navio.horsebackridingapp.databinding.DialogEditBookingBinding
+import com.navio.horsebackridingapp.fragments.bookings.FragmentBookings
 
-class DialogEditBooking(private val context: Context, private val horses: List<Horse>) {
+class DialogEditBooking(
+    private val context: Context,
+    private val horses: List<Horse>,
+    private val callback: FragmentBookings.OnItemEdited?
+) {
 
     private val binding = DialogEditBookingBinding.inflate(LayoutInflater.from(context))
     private var dialog: AlertDialog? = null
@@ -52,17 +58,15 @@ class DialogEditBooking(private val context: Context, private val horses: List<H
             val hour = binding.dialogEditBookingFieldHour.text.toString()
             val comment = binding.dialogEditBookingFieldComment.text.toString()
 
-            val editedBooking = Booking(
+            val editedBooking = BookingUpdate(
                 booking.id,
-                -1,
                 horseId,
-                hor
                 date,
                 hour,
                 comment
             )
 
-            //callback?.onItemEdited(booking)
+            callback?.onItemEdited(editedBooking)
             dismiss()
         }
 
