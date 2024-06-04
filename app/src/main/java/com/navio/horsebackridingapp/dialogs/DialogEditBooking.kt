@@ -27,33 +27,26 @@ class DialogEditBooking(
             .setView(binding.root)
             .create()
 
-        // Get the Spinner from the dialog
         val spinner: Spinner = binding.dialogEditBookingFieldHorse
-        // Create an ArrayAdapter using a default spinner layout and the array of horses
-        val adapter = ArrayAdapter(context, R.layout.simple_spinner_item, horses.map { it.name })
-        // Specify the layout to use when the list of choices appears
+        val spinnerHorses = horses.filter { horse -> horse.isSick == 0 }
+        val adapter = ArrayAdapter(context, R.layout.simple_spinner_item, spinnerHorses.map { it.name })
+
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        // Apply the adapter to the spinner
         spinner.adapter = adapter
-        // Set the selected item to the horse of the booking
-        val selectedHorse = horses.find { it.name == booking.horseName }
+        val selectedHorse = spinnerHorses.find { it.name == booking.horseName }
         if (selectedHorse != null) {
-            spinner.setSelection(horses.indexOf(selectedHorse))
+            spinner.setSelection(spinnerHorses.indexOf(selectedHorse))
         }
 
         binding.dialogEditBookingFieldDate.setText(booking.date)
         binding.dialogEditBookingFieldHour.setText(booking.hour)
         binding.dialogEditBookingFieldComment.setText(booking.comment)
 
-        //BUTTONS
-        //Cancel
         binding.dialogEditBookingButtonCancel.setOnClickListener {
             dismiss()
         }
-        //Add
         binding.dialogEditBookingButtonSave.setOnClickListener {
-
-            val horseId = horses[spinner.selectedItemPosition].id
+            val horseId = spinnerHorses[spinner.selectedItemPosition].id
             val date = binding.dialogEditBookingFieldDate.text.toString()
             val hour = binding.dialogEditBookingFieldHour.text.toString()
             val comment = binding.dialogEditBookingFieldComment.text.toString()
@@ -69,7 +62,6 @@ class DialogEditBooking(
             callback?.onItemEdited(editedBooking)
             dismiss()
         }
-
     }
 
     fun show() {
@@ -79,5 +71,4 @@ class DialogEditBooking(
     private fun dismiss() {
         dialog?.dismiss()
     }
-
 }

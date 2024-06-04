@@ -21,6 +21,7 @@ import com.navio.horsebackridingapp.databinding.FragmentBookingsBinding
 import com.navio.horsebackridingapp.dialogs.DialogEditBooking
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FragmentBookings : Fragment() {
 
@@ -74,20 +75,26 @@ class FragmentBookings : Fragment() {
                                                 val response =
                                                     apiService.updateBookingAPI(booking.id, booking)
 
+                                                Log.d("Navio_id", booking.horse_id.toString())
+
                                                 if (response.isSuccessful) {
-                                                    Toast.makeText(
-                                                        requireContext(),
-                                                        "Booking updated.",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
+                                                    withContext(Dispatchers.Main){
+                                                        Toast.makeText(
+                                                            requireContext(),
+                                                            "Booking updated.",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    }
+
                                                     fetchBookings()
                                                 } else {
-                                                    Toast.makeText(
-                                                        requireContext(),
-                                                        "Error updating booking.",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-
+                                                    withContext(Dispatchers.Main){
+                                                        Toast.makeText(
+                                                            requireContext(),
+                                                            "Error updating booking.",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    }
                                                 }
                                             }
                                         }
