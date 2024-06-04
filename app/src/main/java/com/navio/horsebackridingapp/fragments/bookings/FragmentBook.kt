@@ -5,6 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.navio.horsebackridingapp.api.RetrofitClient
+import com.navio.horsebackridingapp.data.Booking
+import com.navio.horsebackridingapp.data.Horse
 import com.navio.horsebackridingapp.databinding.FragmentBookBinding
 
 class FragmentBook : Fragment() {

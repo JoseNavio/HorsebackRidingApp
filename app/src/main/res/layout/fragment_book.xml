@@ -6,5 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".fragments.bookings.FragmentBook">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_book_field"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <EditText
+            android:id="@+id/fragment_book_horse_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Horse"
+            android:textSize="16sp"
+            android:inputType="numberDecimal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

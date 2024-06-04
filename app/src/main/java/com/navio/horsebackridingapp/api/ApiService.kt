@@ -1,5 +1,6 @@
 package com.navio.horsebackridingapp.api
 
+import com.navio.horsebackridingapp.data.BookingRequest
 import com.navio.horsebackridingapp.data.LoginRequest
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -19,6 +20,9 @@ interface ApiService {
 
     @GET("get-all-bookings")
     suspend fun getAllBookings(): Response<ResponseBody>
+
+    @POST("create-booking")
+    suspend fun createBookingAPI(@Body request: BookingRequest): Response<ResponseBody>
 
     @DELETE("delete-booking/{booking}")
     suspend fun deleteBookingAPI(@Path("booking") bookingId: Int): Response<ResponseBody>

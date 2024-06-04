@@ -13,7 +13,7 @@
         android:layout_margin="24dp"
         android:text="Login"
         android:textAlignment="center"
-        android:textSize="32dp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

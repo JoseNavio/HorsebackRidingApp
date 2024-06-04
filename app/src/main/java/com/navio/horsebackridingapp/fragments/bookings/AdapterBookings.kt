@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.navio.horsebackridingapp.R
 import com.navio.horsebackridingapp.data.Booking
 
-class AdapterBookings(val listener: FragmentBookings.OnItemChanges) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class AdapterBookings(val listener: FragmentBookings.OnItemChanges) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var bookings: MutableList<Booking> = mutableListOf()
     private var selectedBooking: Int = RecyclerView.NO_POSITION
@@ -55,6 +56,10 @@ class AdapterBookings(val listener: FragmentBookings.OnItemChanges) : RecyclerVi
     fun updateBookings(updatedBookings: MutableList<Booking>) {
         bookings = updatedBookings
         notifyDataSetChanged()
+    }
+
+    fun editBooking(booking: Booking) {
+        listener.onItemEdited(booking)
     }
 
     fun deleteBooking(bookingId: Int) {
