@@ -1,6 +1,8 @@
 package com.navio.horsebackridingapp.fragments.bookings
 
 import android.R
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -82,6 +84,17 @@ class FragmentBook() : Fragment() {
                                 "Booking was created successfully.",
                                 Toast.LENGTH_SHORT
                             ).show()
+
+                            //Send a whatsapp message
+                                val mensaje = "Your booking has been confirmed!\n\n" +
+                                        "Details:\n" +
+                                        "Date: $date\n" +
+                                        "Hour: $hour\n"
+                                val phoneNumber = 618368854
+                                val intent = Intent(Intent.ACTION_VIEW)
+                                intent.data =
+                                    Uri.parse("https://api.whatsapp.com/send?phone=$phoneNumber&text=${Uri.encode(mensaje)}")
+                                startActivity(intent)
                         }
                     }else{
                         withContext(Dispatchers.Main) {
