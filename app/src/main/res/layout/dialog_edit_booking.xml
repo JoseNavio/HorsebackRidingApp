@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@id/dialog_edit_booking_title">
 
         <Spinner
-            android:id="@+id/dialog_edit_booking_field_horse"
+            android:id="@+id/dialog_edit_booking_spinner_horse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Horse" />
@@ -155,6 +155,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dialog_edit_booking_linear_comment" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

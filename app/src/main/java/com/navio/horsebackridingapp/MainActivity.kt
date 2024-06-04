@@ -12,6 +12,7 @@ import com.navio.horsebackridingapp.fragments.bookings.FragmentBookings
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var  fragmentBookings: FragmentBookings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +52,11 @@ class MainActivity : AppCompatActivity() {
 
         enableBookings()
 
+        fragmentBookings = FragmentBookings.newInstance()
+
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(binding.mainActivityContainer.id, FragmentBookings.newInstance())
+            replace(binding.mainActivityContainer.id, fragmentBookings)
         }
     }
 

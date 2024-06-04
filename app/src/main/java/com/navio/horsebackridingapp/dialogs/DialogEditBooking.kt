@@ -27,7 +27,7 @@ class DialogEditBooking(
             .setView(binding.root)
             .create()
 
-        val spinner: Spinner = binding.dialogEditBookingFieldHorse
+        val spinner: Spinner = binding.dialogEditBookingSpinnerHorse
         val spinnerHorses = horses.filter { horse -> horse.isSick == 0 }
         val adapter = ArrayAdapter(context, R.layout.simple_spinner_item, spinnerHorses.map { it.name })
 

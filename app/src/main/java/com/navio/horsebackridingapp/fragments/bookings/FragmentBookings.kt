@@ -29,7 +29,6 @@ class FragmentBookings : Fragment() {
     private lateinit var recycler: RecyclerView
     private lateinit var adapterBookings: AdapterBookings
     private var bookingsLiveData = MutableLiveData<MutableList<Booking>>()
-    private var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +77,7 @@ class FragmentBookings : Fragment() {
                                                 Log.d("Navio_id", booking.horse_id.toString())
 
                                                 if (response.isSuccessful) {
-                                                    withContext(Dispatchers.Main){
+                                                    withContext(Dispatchers.Main) {
                                                         Toast.makeText(
                                                             requireContext(),
                                                             "Booking updated.",
@@ -88,7 +87,7 @@ class FragmentBookings : Fragment() {
 
                                                     fetchBookings()
                                                 } else {
-                                                    withContext(Dispatchers.Main){
+                                                    withContext(Dispatchers.Main) {
                                                         Toast.makeText(
                                                             requireContext(),
                                                             "Error updating booking.",
@@ -149,15 +148,10 @@ class FragmentBookings : Fragment() {
             val horse = horses.find { it.id == booking.horseId }
             booking.horseName = horse?.name ?: "Unknown"
         }
-        //Get the user id
-        userId = bookings.first()?.let {
-            it.userId
-        } ?: -1
-
         bookingsLiveData.postValue(bookings.toMutableList())
     }
 
-    private suspend fun fetchHorses(): List<Horse> {
+    public suspend fun fetchHorses(): List<Horse> {
         val apiService = RetrofitClient.getInstance(requireContext())
         val response = apiService.getAllHorses()
 

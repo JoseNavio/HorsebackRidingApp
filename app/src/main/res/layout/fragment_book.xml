@@ -6,26 +6,148 @@
     android:layout_height="match_parent"
     tools:context=".fragments.bookings.FragmentBook">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fragment_book_field"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <TextView
+        android:id="@+id/fragment_book_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="24dp"
+        android:text="Add Booking"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/fragment_book_horse_name"
+    <!--Horse-->
+    <LinearLayout
+        android:id="@+id/fragment_book_linear_horse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_book_title">
+
+        <Spinner
+            android:id="@+id/fragment_book_spinner_horse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Horse"
-            android:textSize="16sp"
-            android:inputType="numberDecimal" />
+            android:hint="Horse" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+    <!--Date-->
+    <LinearLayout
+        android:id="@+id/fragment_book_linear_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_book_linear_horse">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fragment_book_input_date"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <EditText
+                android:id="@+id/fragment_book_field_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date"
+                android:inputType="date"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+    <!--Hour-->
+    <LinearLayout
+        android:id="@+id/fragment_book_linear_hour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_book_linear_date">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fragment_book_input_hour"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/fragment_book_field_hour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hour"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+    <!--Comment-->
+    <LinearLayout
+        android:id="@+id/fragment_book_linear_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_book_linear_hour">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fragment_book_input_comment"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/fragment_book_field_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Comment"
+                android:inputType="textMultiLine"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+    <!--Buttons-->
+    <LinearLayout
+        android:id="@+id/fragment_book_linear_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_book_linear_comment">
+
+        <Button
+            android:id="@+id/fragment_book_button_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Confirm" />
+
+    </LinearLayout>
+    <!--Space-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_margin="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_book_linear_comment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
