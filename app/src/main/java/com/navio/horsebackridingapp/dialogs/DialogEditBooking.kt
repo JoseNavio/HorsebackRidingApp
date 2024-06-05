@@ -39,12 +39,14 @@ class DialogEditBooking(
         }
 
         binding.dialogEditBookingFieldDate.setText(booking.date)
+
         binding.dialogEditBookingFieldHour.setText(booking.hour)
         binding.dialogEditBookingFieldComment.setText(booking.comment)
 
         binding.dialogEditBookingButtonCancel.setOnClickListener {
             dismiss()
         }
+
         binding.dialogEditBookingButtonSave.setOnClickListener {
             val horseId = spinnerHorses[spinner.selectedItemPosition].id
             val date = binding.dialogEditBookingFieldDate.text.toString()

@@ -82,12 +82,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
+            <Spinner
                 android:id="@+id/fragment_book_field_hour"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Hour"
-                android:inputType="number"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>

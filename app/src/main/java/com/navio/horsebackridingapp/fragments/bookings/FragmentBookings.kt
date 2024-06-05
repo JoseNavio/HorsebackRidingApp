@@ -74,8 +74,6 @@ class FragmentBookings : Fragment() {
                                                 val response =
                                                     apiService.updateBookingAPI(booking.id, booking)
 
-                                                Log.d("Navio_id", booking.horse_id.toString())
-
                                                 if (response.isSuccessful) {
                                                     withContext(Dispatchers.Main) {
                                                         Toast.makeText(
