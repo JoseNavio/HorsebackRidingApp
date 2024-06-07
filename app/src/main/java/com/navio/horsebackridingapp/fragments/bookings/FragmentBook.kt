@@ -121,13 +121,18 @@ class FragmentBook() : Fragment() {
                                     "Booking was created successfully.",
                                     Toast.LENGTH_SHORT
                                 ).show()
-
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Prompt the user for their telephone number before.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 //Send a whatsapp message
                                 val mensaje = "Your booking has been confirmed!\n\n" +
                                         "Details:\n" +
                                         "Date: $date\n" +
                                         "Hour: $hour\n"
-                                val phoneNumber = 618368854
+                                //todo Get the user's phone number via dialog or database...
+                                val phoneNumber = 0
                                 val intent = Intent(Intent.ACTION_VIEW)
                                 intent.data =
                                     Uri.parse(
